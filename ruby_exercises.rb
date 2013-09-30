@@ -87,8 +87,9 @@ puts "#{ha}"
 puts "#{ah}"
 
 # 15. Look at several Rails/Ruby online API sources and say which one your like best and why.
+section_heading 15
 puts "http://ruby-doc.org/core-1.9.3/"
-puts "Easy to navigate through different pages. Page design is clean and easy to read."
+puts "Easy to navigate. Page design is clean and easy to read."
 puts "\nI also like http://apidock.com/ruby"
 puts "It has useful user notes."
 
