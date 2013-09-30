@@ -50,7 +50,7 @@ puts "#{arr6}"
 
 # 7. What's the major difference between an Array and a Hash?
 section_heading 7
-puts "Array is a set of values that ordered and indexed by number. "
+puts "Array is a group of values that ordered and indexed by number. "
 puts "Hashes are key-value pairs"
 
 # 8. Create a Hash using both Ruby 1.8 and 1.9 syntax.
@@ -87,7 +87,10 @@ puts "#{ha}"
 puts "#{ah}"
 
 # 15. Look at several Rails/Ruby online API sources and say which one your like best and why.
+puts "http://ruby-doc.org/core-1.9.3/"
+puts "Easy to navigate through different pages. Page design is clean and easy to read."
+puts "\nI also like http://apidock.com/ruby"
+puts "It has useful user notes."
 
-# ==> to do
 
 
