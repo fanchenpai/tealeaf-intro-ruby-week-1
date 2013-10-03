@@ -13,23 +13,28 @@ def get_name(err_msg)
   s
 end
 
-def calculate_total(arr = [], busted = false)
+def calculate_total(arr = [])
   total = 0
-  arr.each {|card| total += get_value(card[1], busted) }
+  ace_count = 0
+  arr.each do |card|
+    total += get_value(card[1])
+    ace_count += 1 if card[1]=='A'
+  end
+  until ace_count == 0 || total <= 21
+    total -= 10
+    ace_count -= 1
+  end
+
   total
 end
 
-def recalculate_total(arr)
-  calculate_total(arr, true)
-end
-
-def get_value(c,busted)
+def get_value(c)
   if c.to_i.to_s == c
     c.to_i
   elsif ['J','Q','K'].include?(c)
     10
   else
-    if busted then 1 else 11 end
+    11
   end
 end
 
@@ -52,11 +57,11 @@ def ask_hit_or_stay
   s
 end
 
-def print_player_cards(arr,total)
+def print_player_cards(arr,total,name)
   puts "====================="
-  puts "Cards in your hand: "
+  puts "Cards in #{name}'s' hand: "
   print_cards(arr)
-  puts "Your current total: #{total}"
+  puts "Total: #{total}"
   puts "====================="
 end
 
@@ -69,9 +74,8 @@ say "Hello, #{player_name}\n\n"
 say "Game started...\n\n"
 
 deck = ["Spade","Heart","Diamond","Club"].product(['A','2','3','4','5','6','7','8','9','10','J','Q','K'])
-curr_deck = deck.shuffle
-#say deck
-#say shuffled_deck
+curr_deck = deck.shuffle.shuffle.shuffle
+
 
 player_hand = [curr_deck.pop, curr_deck.pop]
 dealer_hand = [curr_deck.pop, curr_deck.pop]
@@ -85,11 +89,13 @@ dealer_stay = false
 until game_over
 
   player_total = calculate_total(player_hand)
-  player_total = recalculate_total(player_hand) if player_total > 21
-  print_player_cards(player_hand, player_total)
+  #player_total = recalculate_total(player_hand) if player_total > 21
+
 
   dealer_total = calculate_total(dealer_hand)
-  dealer_total = recalculate_total(dealer_hand) if dealer_total > 21
+  #dealer_total = recalculate_total(dealer_hand) if dealer_total > 21
+  #print_player_cards(dealer_hand, dealer_total, "Dealer")
+  print_player_cards(player_hand, player_total, player_name)
 
   if player_total == 21
     say "BlackJack! You win!\n\n"
@@ -110,7 +116,7 @@ until game_over
     player_hand << new_card
     say "You get a #{new_card[0]} #{new_card[1]}\n\n"
     player_total = calculate_total(player_hand)
-    player_total = recalculate_total(player_hand) if player_total > 21
+    #player_total = recalculate_total(player_hand) if player_total > 21
     if player_total == 21
       say "BlackJack! You win!\n\n"
       game_over = true
@@ -131,7 +137,7 @@ until game_over
   end
 
   dealer_total = calculate_total(dealer_hand)
-  dealer_total = recalculate_total(dealer_hand) if dealer_total > 21
+  #dealer_total = recalculate_total(dealer_hand) if dealer_total > 21
 
   if dealer_total > 21
     say "Dealer busted! You win!\n\n"
@@ -152,11 +158,10 @@ until game_over
   puts "\n\n"
 end
 
-puts "====================="
-puts "Cards in dealer's hand:"
-print_cards(dealer_hand)
-puts "Dealer's total: #{dealer_total}"
-puts "====================="
+print_player_cards(player_hand, player_total, player_name)
+print_player_cards(dealer_hand, dealer_total, "Dealer")
+
+
 #until game_over
 
 #end
